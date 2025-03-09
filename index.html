@@ -1151,14 +1151,26 @@
     <!-- Script pour le menu hamburger (placé ici pour s'assurer qu'il est chargé en premier) -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            const hamburgerMenu = document.querySelector('.hamburger-menu');
             const hamburgerIcon = document.querySelector('.hamburger-icon');
             const headerRight = document.querySelector('.header-right');
             
-            if (hamburgerIcon && headerRight) {
-                hamburgerIcon.addEventListener('click', function() {
-                    this.classList.toggle('active');
+            if (hamburgerMenu && hamburgerIcon && headerRight) {
+                // Attacher l'événement de clic à la zone entière du menu hamburger
+                hamburgerMenu.addEventListener('click', function(event) {
+                    // Empêcher la propagation du clic vers le header
+                    event.stopPropagation();
+                    // Empêcher le comportement par défaut (redirection vers index.html)
+                    event.preventDefault();
+                    
+                    // Basculer les classes pour l'animation
+                    hamburgerIcon.classList.toggle('active');
                     headerRight.classList.toggle('active');
                 });
+                
+                // Ajouter z-index pour s'assurer que le menu est au-dessus des autres éléments
+                hamburgerMenu.style.position = 'relative';
+                hamburgerMenu.style.zIndex = '1001';
             }
         });
     </script>
