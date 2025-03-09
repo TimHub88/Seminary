@@ -687,9 +687,9 @@
             margin: 0 auto;
             width: 100%;
             justify-content: center;
-            flex-wrap: wrap;
         }
 
+        /* Style de base pour desktop */
         .venue-slide {
             flex: 0 0 100%;
             max-width: 1100px;
@@ -895,30 +895,37 @@
           overflow-x: hidden;
         }
 
+        /* Modifications pour assurer que le carousel fonctionne correctement sur desktop et mobile */
+        /* Desktop styles (par défaut) */
         .venue-carousel {
-          flex-wrap: nowrap;
+          flex-wrap: wrap; /* Permet aux cartes de s'afficher en grille sur desktop */
         }
 
         .venue-slide {
           flex: 0 0 100%;
+          margin-bottom: 2rem;
         }
 
-        @media (min-width: 768px) {
-          .venue-slide {
-            flex: 0 0 50%;
-          }
+        .venue-card {
+          flex-direction: row; /* Horizontale sur desktop */
+          height: auto;
         }
 
-        @media (min-width: 1024px) {
-          .venue-slide {
-            flex: 0 0 33.33%;
-          }
+        .venue-image-container {
+          height: auto;
+          width: 45%;
+          flex: 0 0 45%;
         }
 
-        /* Carousel responsive amélioré */
+        .venue-badge {
+          top: 1rem;
+          left: 1rem;
+        }
+        
+        /* Carousel responsive amélioré pour mobile */
         @media (max-width: 767px) {
           .venue-carousel {
-            flex-wrap: nowrap;
+            flex-wrap: nowrap; /* Empêche le wrap sur mobile pour permettre le défilement */
             transition: transform 0.5s ease-in-out;
             justify-content: flex-start;
             gap: 0;
@@ -927,10 +934,11 @@
           .venue-slide {
             padding: 1rem;
             margin-bottom: 0;
+            flex: 0 0 100%; /* Chaque slide prend toute la largeur sur mobile */
           }
           
           .venue-card {
-            flex-direction: column;
+            flex-direction: column; /* Verticale sur mobile */
             height: auto;
           }
           
@@ -1140,6 +1148,21 @@
         </div>
     </header>
 
+    <!-- Script pour le menu hamburger (placé ici pour s'assurer qu'il est chargé en premier) -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburgerIcon = document.querySelector('.hamburger-icon');
+            const headerRight = document.querySelector('.header-right');
+            
+            if (hamburgerIcon && headerRight) {
+                hamburgerIcon.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    headerRight.classList.toggle('active');
+                });
+            }
+        });
+    </script>
+    
     <section class="hero">
         <h1>Organisez votre séminaire d'entreprise de A à Z</h1>
         <p>Seminary est votre solution complète pour créer, organiser et gérer vos séminaires professionnels avec facilité et efficacité</p>
@@ -1461,6 +1484,11 @@
                     prevButton.style.display = 'flex';
                     nextButton.style.display = 'flex';
                     dots.forEach(dot => dot.style.display = 'block');
+                    // Assurer que le carousel est en mode mobile
+                    carousel.style.flexWrap = 'nowrap';
+                    slides.forEach(slide => {
+                        slide.style.flex = '0 0 100%';
+                    });
                 } 
                 // Sur desktop, afficher en grille
                 else {
@@ -1468,6 +1496,11 @@
                     prevButton.style.display = 'none';
                     nextButton.style.display = 'none';
                     dots.forEach(dot => dot.style.display = 'none');
+                    // Assurer que le carousel est en mode desktop
+                    carousel.style.flexWrap = 'wrap';
+                    slides.forEach(slide => {
+                        slide.style.flex = '0 0 100%';
+                    });
                 }
             }
             
@@ -1617,19 +1650,6 @@
                 });
             });
         }
-    </script>
-    
-    <!-- Script pour le menu hamburger -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const hamburger = document.querySelector('.hamburger-icon');
-            const headerRight = document.querySelector('.header-right');
-            
-            hamburger.addEventListener('click', function() {
-                this.classList.toggle('active');
-                headerRight.classList.toggle('active');
-            });
-        });
     </script>
 </body>
 </html> 
