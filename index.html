@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Seminary - Trouvez le lieu parfait pour votre séminaire</title>
+    <link rel="icon" type="image/png" href="favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -1121,7 +1122,7 @@
     <header class="new-header">
         <div class="header-container">
             <a href="index.html" class="header-logo">
-            <img src="https://d1muf25xaso8hp.cloudfront.net/https%3A%2F%2F11d96a0e7e946a6d02eea1b59ed8995d.cdn.bubble.io%2Ff1738937103143x452387340290872700%2FSans%2520titre-1%2520%25281%2529.png?w=64&h=64&auto=compress&dpr=1&fit=max" alt="Seminary Logo">
+            <img src="images/logo.png" alt="Seminary Logo">
                 <span class="header-logo-text">Seminary</span>
             </a>
             
@@ -1470,6 +1471,16 @@
             document.head.appendChild(script);
         }
         
+        // Fonction pour obtenir des photos spéciales pour certains lieux
+        function getSpecialVenuePhoto(venueName) {
+            // Solution spécifique pour le Centre des Congrès d'Épinal
+            if (venueName === "Centre des Congrès d'Épinal") {
+                console.log(`✅ Image de secours utilisée pour ${venueName}`);
+                return "https://www.tourisme-epinal.com/sites/ot-epinal/files/styles/gallery_lightbox/public/content/images/_mg_0617_c_jf_hamard_-_centre_congres_1.jpg?itok=oCTHQeNX";
+            }
+            return null;
+        }
+        
         // Fonction pour initialiser le carrousel
         function initCarousel() {
             const carousel = document.querySelector('.venue-carousel');
@@ -1609,10 +1620,11 @@
                 const placeId = img.getAttribute('data-place-id');
                 if (!placeId) return;
                 
-                // Solution spécifique pour le Centre des Congrès d'Épinal
-                if (placeId === "Centre des Congrès d'Épinal") {
-                    img.src = "https://www.congres-epinal.com/wp-content/uploads/2020/01/slider1.jpg";
-                    console.log(`✅ Image de secours utilisée pour ${placeId}`);
+                // Vérifier si c'est un lieu avec image spéciale
+                const specialPhoto = getSpecialVenuePhoto(placeId);
+                if (specialPhoto) {
+                    img.src = specialPhoto;
+                    console.log(`✅ Image spéciale utilisée pour ${placeId}`);
                     return; // Sortir de la fonction pour ce lieu
                 }
                 
