@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Seminary - Trouvez le lieu parfait pour votre séminaire</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -678,17 +678,22 @@
             max-width: 1200px;
             margin: 0 auto;
             overflow: hidden;
+            padding: 0 1rem;
         }
 
         .venue-carousel {
             display: flex;
-            transition: transform 0.5s ease-in-out;
+            gap: 24px;
+            margin: 0 auto;
             width: 100%;
+            justify-content: center;
+            flex-wrap: wrap;
         }
 
         .venue-slide {
             flex: 0 0 100%;
-            padding: 1rem;
+            max-width: 1100px;
+            margin-bottom: 24px;
         }
 
         .venue-card {
@@ -697,16 +702,9 @@
             overflow: hidden;
             box-shadow: var(--shadow-md);
             display: flex;
-            flex-direction: column;
-            height: 100%;
+            flex-direction: row;
+            height: auto;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        @media (min-width: 768px) {
-            .venue-card {
-                flex-direction: row;
-                height: 350px;
-            }
         }
 
         .venue-card:hover {
@@ -716,16 +714,9 @@
 
         .venue-image-container {
             position: relative;
-            height: 200px;
+            width: 45%;
             overflow: hidden;
-            flex: 0 0 100%;
-        }
-
-        @media (min-width: 768px) {
-            .venue-image-container {
-            height: auto;
-                flex: 0 0 50%;
-            }
+            flex: 0 0 45%;
         }
 
         .venue-image {
@@ -742,7 +733,7 @@
         .venue-badge {
             position: absolute;
             top: 1rem;
-            right: 1rem;
+            left: 1rem;
             background-color: var(--primary-color);
             color: var(--white);
             padding: 0.25rem 0.75rem;
@@ -757,12 +748,13 @@
             display: flex;
             flex-direction: column;
             flex: 1;
+            text-align: left;
         }
 
         .venue-name {
             font-size: 1.5rem;
             font-weight: 700;
-            margin-bottom: 0.75rem;
+            margin-bottom: 1rem;
             color: var(--gray-700);
         }
 
@@ -772,7 +764,7 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.75rem;
             color: var(--gray-500);
             font-size: 0.95rem;
         }
@@ -782,6 +774,7 @@
         .venue-price i {
             color: var(--primary-color);
             font-size: 1rem;
+            min-width: 1rem;
         }
 
         .venue-button {
@@ -798,6 +791,7 @@
             transition: all var(--transition-fast);
             box-shadow: var(--shadow-sm);
             align-self: flex-start;
+            margin-top: 1.5rem;
         }
 
         .venue-button:hover {
@@ -839,11 +833,11 @@
         }
 
         .prev-arrow {
-            left: 0.5rem;
+            left: 10px;
         }
 
         .next-arrow {
-            right: 0.5rem;
+            right: 10px;
         }
 
         .carousel-indicators {
@@ -853,7 +847,7 @@
             gap: 0.5rem;
         }
 
-        .indicator {
+        .carousel-dot {
             width: 10px;
             height: 10px;
             border-radius: 50%;
@@ -864,9 +858,253 @@
             padding: 0;
         }
 
-        .indicator.active {
+        .carousel-dot.active {
             background-color: var(--primary-color);
             transform: scale(1.2);
+        }
+        
+        /* ----- Responsive amélioré général ----- */
+
+        /* Images fluides */
+        img {
+          max-width: 100%;
+          height: auto;
+        }
+
+        /* Hero responsive */
+        @media (max-width: 768px) {
+          .hero {
+            padding: 3rem 1rem;
+          }
+          
+          .hero h1 {
+            font-size: 2rem;
+          }
+          
+          .hero p {
+            font-size: 1rem;
+          }
+          
+          .search-container {
+            padding: 1rem;
+          }
+        }
+
+        /* Carousel responsive */
+        .venue-carousel-container {
+          overflow-x: hidden;
+        }
+
+        .venue-carousel {
+          flex-wrap: nowrap;
+        }
+
+        .venue-slide {
+          flex: 0 0 100%;
+        }
+
+        @media (min-width: 768px) {
+          .venue-slide {
+            flex: 0 0 50%;
+          }
+        }
+
+        @media (min-width: 1024px) {
+          .venue-slide {
+            flex: 0 0 33.33%;
+          }
+        }
+
+        /* Carousel responsive amélioré */
+        @media (max-width: 767px) {
+          .venue-carousel {
+            flex-wrap: nowrap;
+            transition: transform 0.5s ease-in-out;
+            justify-content: flex-start;
+            gap: 0;
+          }
+          
+          .venue-slide {
+            padding: 1rem;
+            margin-bottom: 0;
+          }
+          
+          .venue-card {
+            flex-direction: column;
+            height: auto;
+          }
+          
+          .venue-image-container {
+            height: 200px;
+            width: 100%;
+            flex: none;
+          }
+          
+          .venue-badge {
+            top: 1rem;
+            right: 1rem;
+            left: auto;
+          }
+          
+          .carousel-arrow {
+            width: 34px;
+            height: 34px;
+            font-size: 0.9rem;
+          }
+          
+          .prev-arrow {
+            left: 0.3rem;
+          }
+          
+          .next-arrow {
+            right: 0.3rem;
+          }
+          
+          /* Améliorations supplémentaires pour le layout mobile */
+          .section-title {
+            font-size: 1.8rem;
+          }
+          
+          .section-subtitle {
+            font-size: 1rem;
+            margin-bottom: 2rem;
+          }
+          
+          /* Spacing ajusté pour mobile */
+          .best-venues,
+          .how-it-works,
+          .capacity-section {
+            padding: 3rem 1rem;
+          }
+        }
+
+        /* Steps et Capacity responsive */
+        @media (max-width: 768px) {
+          .steps-container,
+          .capacity-cards {
+            flex-direction: column;
+            align-items: center;
+          }
+          
+          .step-card,
+          .capacity-card {
+            max-width: 90%;
+          }
+        }
+
+        /* Header responsive */
+        @media (max-width: 768px) {
+          .header-container {
+            padding: 0 1rem;
+          }
+
+          .header-right {
+            position: fixed;
+            top: 70px;
+            left: 0;
+            right: 0;
+            background-color: #7E22CE;
+            flex-direction: column;
+            align-items: center;
+            padding: 1.5rem;
+            transform: translateY(-100%);
+            opacity: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            z-index: 999;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+          }
+          
+          .header-right.active {
+            transform: translateY(0);
+            opacity: 1;
+          }
+
+          .header-nav {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            margin-bottom: 1.5rem;
+          }
+          
+          .header-nav-link {
+            padding: 0.8rem 0;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+          }
+
+          .header-actions {
+            flex-direction: column;
+            gap: 0.8rem;
+            width: 100%;
+            margin-left: 0;
+          }
+
+          .header-button {
+            display: block;
+            text-align: center;
+            width: 100%;
+            padding: 0.8rem 1rem;
+            font-size: 1rem;
+          }
+          
+          /* Hamburger menu */
+          .hamburger-menu {
+            display: block;
+            cursor: pointer;
+          }
+          
+          .hamburger-icon {
+            width: 30px;
+            height: 24px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+          }
+          
+          .hamburger-icon span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background-color: white;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+          }
+          
+          .hamburger-icon.active span:nth-child(1) {
+            transform: translateY(10px) rotate(45deg);
+          }
+          
+          .hamburger-icon.active span:nth-child(2) {
+            opacity: 0;
+          }
+          
+          .hamburger-icon.active span:nth-child(3) {
+            transform: translateY(-10px) rotate(-45deg);
+          }
+        }
+        
+        @media (min-width: 769px) {
+          .hamburger-menu {
+            display: none;
+          }
+        }
+
+        /* Footer responsive */
+        @media (max-width: 768px) {
+          .footer-content {
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+          }
+
+          .footer-column {
+            text-align: center;
+          }
+
+          .social-links {
+            justify-content: center;
+          }
         }
     </style>
 </head>
@@ -879,6 +1117,14 @@
                 <span class="header-logo-text">Seminary</span>
             </a>
             
+            <div class="hamburger-menu">
+                <div class="hamburger-icon">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+            
             <div class="header-right">
                 <nav class="header-nav">
                     <a href="#" class="header-nav-link">Fonctionnalités</a>
@@ -890,7 +1136,7 @@
                     <a href="#" class="header-button header-button-primary">Commencer</a>
                     <a href="#" class="header-button header-button-signup">S'inscrire</a>
                 </div>
-        </div>
+            </div>
         </div>
     </header>
 
@@ -1198,9 +1444,38 @@
             const dots = document.querySelectorAll('.carousel-dot');
             let activeIndex = 0;
             let startX, moveX;
+            let isMobile = window.innerWidth < 768;
+            
+            // Mise à jour initiale en fonction de la taille de l'écran
+            updateCarouselMode();
+            
+            // Détecter les changements de taille d'écran
+            window.addEventListener('resize', updateCarouselMode);
+            
+            function updateCarouselMode() {
+                isMobile = window.innerWidth < 768;
+                
+                // Sur mobile, configurer le carrousel pour le défilement
+                if (isMobile) {
+                    carousel.style.transform = `translateX(-${activeIndex * 100}%)`;
+                    prevButton.style.display = 'flex';
+                    nextButton.style.display = 'flex';
+                    dots.forEach(dot => dot.style.display = 'block');
+                } 
+                // Sur desktop, afficher en grille
+                else {
+                    carousel.style.transform = 'translateX(0)';
+                    prevButton.style.display = 'none';
+                    nextButton.style.display = 'none';
+                    dots.forEach(dot => dot.style.display = 'none');
+                }
+            }
             
             // Fonction pour afficher un slide par son index
             function showSlide(index) {
+                // Ne faire défiler que sur mobile
+                if (!isMobile) return;
+                
                 if (index < 0) index = slides.length - 1;
                 if (index >= slides.length) index = 0;
                 
@@ -1224,23 +1499,24 @@
                 dot.addEventListener('click', () => showSlide(i));
             });
             
-            // Rotation automatique toutes les 5 secondes
-            setInterval(() => {
-                showSlide(activeIndex + 1);
+            // Rotation automatique seulement sur mobile
+            const autoplayInterval = setInterval(() => {
+                if (isMobile) showSlide(activeIndex + 1);
             }, 5000);
             
             // Support des interactions tactiles (swipe)
             carousel.addEventListener('touchstart', (e) => {
+                if (!isMobile) return;
                 startX = e.touches[0].clientX;
             });
             
             carousel.addEventListener('touchmove', (e) => {
-                if (!startX) return;
+                if (!isMobile || !startX) return;
                 moveX = e.touches[0].clientX;
             });
             
             carousel.addEventListener('touchend', () => {
-                if (!startX || !moveX) return;
+                if (!isMobile || !startX || !moveX) return;
                 
                 const diff = startX - moveX;
                 if (Math.abs(diff) > 50) { // Seuil de swipe
@@ -1337,10 +1613,23 @@
                         });
                     } else {
                         console.warn(`❌ Lieu non trouvé pour ${placeId}, conservation de l'image statique (status: ${status})`);
-                }
+                    }
+                });
+            });
+        }
+    </script>
+    
+    <!-- Script pour le menu hamburger -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburger = document.querySelector('.hamburger-icon');
+            const headerRight = document.querySelector('.header-right');
+            
+            hamburger.addEventListener('click', function() {
+                this.classList.toggle('active');
+                headerRight.classList.toggle('active');
             });
         });
-        }
     </script>
 </body>
 </html> 
