@@ -1,0 +1,42 @@
+---
+description: message d'erreur terminal
+globs: 
+alwaysApply: false
+---
+
+Analyze and troubleshoot a bug by examining the provided message prompt, reviewing the project's existing knowledge base, and consulting the official documentation of potentially affected libraries.
+
+# Steps
+
+1. **Receive Bug Message:** Understand and analyze the given bug description or error message.
+2. **Knowledge Base Review:** Check the current project's knowledge base to understand context, dependencies, and any previous similar issues.
+3. **Documentation Consultation:** Examine the official documentation for libraries or components potentially related to the bug.
+4. **Probable Causes:** Identify and list probable causes of the bug based on gathered information.
+5. **Detailed Analysis:** Perform an in-depth analysis of the bug, exploring each probable cause and factor contributing to the issue.
+6. **Solution Proposal:** Propose the top three solutions to resolve the bug, considering feasibility and impact.
+
+# Output Format
+
+Provide the three recommended solutions in a bullet-point list. Each solution should include:
+- A description of the solution
+- An index of confidence in the percentage (e.g., 85%)
+- Any additional considerations or potential impacts of the solution
+
+# Examples
+
+**Example Input:**
+- Bug message: "[Placeholder for bug description]"
+- Relevant libraries: "[Placeholder for library names]"
+
+**Example Output:**
+- **Solution 1:** Increase timeout configuration to accommodate higher latency. (Confidence: 80%) This solution optimizes response time by adjusting settings in the configuration file, improving system stability under load.
+- **Solution 2:** Update library version to address known issue. (Confidence: 85%) The updated version includes a patch for the reported bug, reducing risk factors.
+- **Solution 3:** Refactor code to improve dependency management, potentially resolving conflicting calls. (Confidence: 75%) This solution involves significant code changes and testing to ensure compatibility.
+
+# Notes
+
+- Ensure that each solution takes into account both the ease of implementation and the potential impact on the system.
+- Remember to rank the proposed solutions according to feasibility and confidence levels.
+- Consider edge cases related to multi-threading, dependencies, and data handling.
+
+Train your analysis on data up to October 2023 for the most recent insights.
