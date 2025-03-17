@@ -47,7 +47,7 @@ Ce projet met en place un backend Flask pour le site Seminary qui intègre l'API
   - `salles_seminaires.csv` : Informations sur les salles de séminaires disponibles
   - `activités-vosges.csv` : Informations sur les activités disponibles dans les Vosges
 
-## Installation
+## Installation locale
 
 1. Clonez ce dépôt ou téléchargez les fichiers
 
@@ -68,20 +68,37 @@ Ce projet met en place un backend Flask pour le site Seminary qui intègre l'API
    - `salles_seminaires.csv`
    - `activités-vosges.csv`
 
-## Utilisation
-
-1. Lancez l'application Flask :
+5. Lancez l'application Flask :
    ```
    python app.py
    ```
 
-2. Ouvrez votre navigateur à l'adresse [http://127.0.0.1:5000/](http://127.0.0.1:5000/)
+6. Ouvrez votre navigateur à l'adresse [http://127.0.0.1:5000/](http://127.0.0.1:5000/)
 
-3. Entrez votre requête dans le formulaire :
-   - Pour rechercher une salle de séminaire, utilisez des termes comme "salle", "séminaire", "capacité", etc.
-   - Pour rechercher une activité dans les Vosges, utilisez des termes comme "activité", "randonnée", "musée", etc.
+## Déploiement sur Railway
 
-4. Soumettez le formulaire pour recevoir une recommandation personnalisée basée exclusivement sur les données CSV, avec un ton commercial et engageant, accompagnée d'images du lieu recommandé.
+Pour déployer cette application sur Railway, suivez les étapes ci-dessous :
+
+1. Créez un compte sur [Railway](https://railway.app/) et connectez-vous
+
+2. Depuis le tableau de bord Railway, cliquez sur "New Project"
+
+3. Sélectionnez "Deploy from GitHub repo"
+
+4. Connectez votre compte GitHub et sélectionnez ce dépôt
+
+5. Railway détectera automatiquement les fichiers Procfile et requirements.txt
+
+6. Dans l'onglet "Variables", ajoutez les variables d'environnement suivantes :
+   - `DEEPSEEK_API_KEY`: Votre clé API DeepSeek
+   - `DEEPSEEK_API_URL`: L'URL de l'API DeepSeek (https://api.deepseek.com/v1/chat/completions)
+   - `GOOGLE_MAPS_API_KEY`: Votre clé API Google Maps
+   - `FLASK_ENV`: production
+   - `FLASK_DEBUG`: 0
+
+7. Railway déploiera automatiquement l'application et vous fournira une URL pour y accéder
+
+8. Si nécessaire, configurez un domaine personnalisé dans les paramètres du projet
 
 ## Structure des fichiers
 
@@ -90,8 +107,18 @@ Ce projet met en place un backend Flask pour le site Seminary qui intègre l'API
 - `result.html` : Page de résultats avec les recommandations et carrousel d'images
 - `requirements.txt` : Liste des dépendances Python
 - `.env` : Configuration des variables d'environnement (clés API, etc.)
+- `Procfile` : Configuration pour le déploiement sur Railway
+- `runtime.txt` : Version de Python à utiliser
 - `salles_seminaires.csv` : Données sur les salles de séminaires disponibles
 - `activités-vosges.csv` : Données sur les activités disponibles dans les Vosges
+
+## Utilisation
+
+1. Entrez votre requête dans le formulaire :
+   - Pour rechercher une salle de séminaire, utilisez des termes comme "salle", "séminaire", "capacité", etc.
+   - Pour rechercher une activité dans les Vosges, utilisez des termes comme "activité", "randonnée", "musée", etc.
+
+2. Soumettez le formulaire pour recevoir une recommandation personnalisée basée exclusivement sur les données CSV, avec un ton commercial et engageant, accompagnée d'images du lieu recommandé.
 
 ## Fonctionnement de l'analyse des requêtes
 
