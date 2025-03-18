@@ -458,7 +458,7 @@ def get_venue_reviews(place_id):
                 })
         else:
             if result.get("status") != "OK":
-                print(f"Erreur API: {result.get('status')} - {result.get('error_message', 'Pas de message d\'erreur')}")
+                print(f"Erreur API: {result.get('status')} - {result.get('error_message', \"Pas de message d'erreur\")}")
             elif "result" not in result:
                 print("La clé 'result' est absente de la réponse API")
             elif "reviews" not in result["result"]:
