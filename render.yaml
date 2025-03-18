@@ -2,6 +2,7 @@ services:
   - type: web
     name: seminary-flask
     env: python
+    runtime: python
     region: frankfurt
     buildCommand: pip install -r requirements.txt
     startCommand: gunicorn app:app
@@ -18,4 +19,3 @@ services:
         value: 0
     plan: free
     autoDeploy: true
-    runtime: python3.9
