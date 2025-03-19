@@ -941,6 +941,57 @@
           .social-links {
             justify-content: center;
           }
+            /* Styles pour le pop-up d'avis */
+          .review-popup {
+              position: fixed;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              background: rgba(0, 0, 0, 0.5); /* fond semi-transparent */
+              display: none; /* caché par défaut */
+              align-items: center;
+              justify-content: center;
+              z-index: 2000; /* au-dessus de tous les éléments */
+            }
+            
+          .review-popup-content {
+              background: var(--white);
+              padding: 2rem;
+              border-radius: 8px;
+              text-align: center;
+              max-width: 90%;
+              box-shadow: var(--shadow-lg);
+            }
+            
+          .review-popup-content h2 {
+              margin-bottom: 1rem;
+              color: var(--primary-color);
+            }
+            
+          .review-popup-content input {
+              width: 80%;
+              padding: 0.75rem;
+              margin-bottom: 1rem;
+              border: 1px solid var(--gray-300);
+              border-radius: 4px;
+              font-size: 1rem;
+            }
+            
+          .review-popup-content button {
+              padding: 0.75rem 1.5rem;
+              background: var(--primary-color);
+              color: var(--white);
+              border: none;
+              border-radius: 4px;
+              font-size: 1rem;
+              cursor: pointer;
+              transition: background var(--transition-fast);
+            }
+            
+          .review-popup-content button:hover {
+              background: var(--primary-dark);
+            }
         }
     </style>
 </head>
@@ -1065,6 +1116,15 @@
                 <i class="fas fa-arrow-left"></i> Retour à l'accueil
             </a>
         </div>
+        <!-- Pop-up pour recueillir l'avis de l'utilisateur -->
+        <div id="review-popup" class="review-popup">
+          <div class="review-popup-content">
+            <h2>Laissez votre avis</h2>
+            <input type="text" id="review-input" placeholder="Votre avis ici..." />
+            <button id="submit-review">Envoyer</button>
+          </div>
+        </div>
+
     </section>
 
     <!-- Script pour le menu hamburger -->
@@ -1243,6 +1303,42 @@
             reviewSlides[reviewIndex].classList.add('active');
             console.log(`Affichage de l'avis #${reviewIndex+1}`);
         }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+          // Afficher le pop-up 30 secondes après le chargement
+          setTimeout(function() {
+            document.getElementById('review-popup').style.display = 'flex';
+          }, 30000); // 30 000 ms = 30 s
+        
+          // Gérer l'envoi de l'avis
+          document.getElementById('submit-review').addEventListener('click', function() {
+            var review = document.getElementById('review-input').value;
+            if (review.trim() === '') {
+              alert("Veuillez saisir un avis.");
+              return;
+            }
+            // Envoyer l'avis au backend via fetch
+            fetch('/submit_review', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ avis: review })
+            })
+            .then(function(response) {
+              if (response.ok) {
+                // Masquer le pop-up en cas de succès
+                document.getElementById('review-popup').style.display = 'none';
+              } else {
+                alert("Erreur lors de l'envoi de votre avis.");
+              }
+            })
+            .catch(function(error) {
+              console.error(error);
+              alert("Erreur lors de l'envoi de votre avis.");
+            });
+          });
+        });      
         
         function setupReviewExpansion() {
             const reviewSlides = document.querySelectorAll('.review-slide');
