@@ -227,6 +227,10 @@ def parse_activites_vosges_csv():
     except Exception as e:
         print(f"Erreur lors du parsing du fichier activités-vosges.csv: {e}")
         return {}
+        
+# Charger les données CSV dans les variables globales
+salles_seminaires_data = parse_salles_seminaires_csv()
+activites_vosges_data = parse_activites_vosges_csv()
 
 
 def extract_city_from_prompt(prompt):
