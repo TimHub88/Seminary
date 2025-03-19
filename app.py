@@ -638,8 +638,75 @@ def call_deepseek_api(prompt):
     print(f"[DEBUG] Début de call_deepseek_api avec prompt: '{prompt}'")
     context_data, is_venue_search = format_csv_data_for_api(prompt)
     print(f"[DEBUG] Données CSV formatées, is_venue_search: {is_venue_search}")
+    max_retries = 3
+    timeout_seconds = 90
+    # Préparation des données pour l'API, etc.
+    for attempt in range(1, max_retries + 1):
+        try:
+            print(f"[DEBUG] Tentative d'appel à l'API DeepSeek ({attempt}/{max_retries}, timeout: {timeout_seconds}s)...")
+            response = requests.post(
+                DEEPSEEK_API_URL, 
+                headers=headers, 
+                json=data, 
+                timeout=timeout_seconds
+            )
+            response.raise_for_status()
+            result = response.json()
+            response_content = result.get("choices", [{}])[0].get("message", {}).get("content", "")
+            print(f"[DEBUG] Réponse reçue de l'API DeepSeek, longueur: {len(response_content)} caractères")
+            api_logger.log_api_call(
+                endpoint="DeepSeek API",
+                input_data=log_input,
+                output_data=result,
+                status="success"
+            )
+            return response_content
+        except requests.exceptions.Timeout:
+            print(f"[DEBUG] Timeout lors de l'appel à l'API DeepSeek (tentative {attempt}/{max_retries})")
+            if attempt < max_retries:
+                wait_time = 2 ** attempt
+                print(f"[DEBUG] Nouvelle tentative dans {wait_time} secondes...")
+                time.sleep(wait_time)
+            else:
+                api_logger.log_api_call(
+                    endpoint="DeepSeek API",
+                    input_data=log_input,
+                    output_data={"error": "Timeout lors de l'appel à l'API"},
+                    status="error"
+                )
+                return "Désolé, je n'ai pas pu obtenir une réponse de l'API DeepSeek dans le délai imparti. Veuillez réessayer plus tard."
+        except requests.exceptions.RequestException as e:
+            error_message = f"Erreur lors de l'appel à l'API DeepSeek: {str(e)}"
+            print(f"[DEBUG] {error_message}")
+            if attempt < max_retries:
+                wait_time = 2 ** attempt
+                print(f"[DEBUG] Nouvelle tentative dans {wait_time} secondes...")
+                time.sleep(wait_time)
+            else:
+                api_logger.log_api_call(
+                    endpoint="DeepSeek API",
+                    input_data=log_input,
+                    output_data={"error": str(e)},
+                    status="error"
+                )
+                return f"Désolé, une erreur s'est produite lors de l'appel à l'API DeepSeek: {str(e)}"
+        except Exception as e:
+            error_message = f"Erreur inattendue lors de l'appel à l'API DeepSeek: {str(e)}"
+            print(f"[DEBUG] {error_message}")
+            api_logger.log_api_call(
+                endpoint="DeepSeek API",
+                input_data=log_input,
+                output_data={"error": str(e)},
+                status="error"
+            )
+            return f"Désolé, une erreur inattendue s'est produite: {str(e)}"
+    
+    # Ajoutez un return par défaut si aucune tentative ne renvoie de valeur
+    return "Aucune réponse obtenue de l'API DeepSeek."
 
 
+
+@app.route('/submit_review', methods=['POST'])
 def submit_review():
     data = request.get_json()
     avis = data.get('avis', '').strip()
