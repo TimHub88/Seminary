@@ -638,6 +638,24 @@ def call_deepseek_api(prompt):
     print(f"[DEBUG] Début de call_deepseek_api avec prompt: '{prompt}'")
     context_data, is_venue_search = format_csv_data_for_api(prompt)
     print(f"[DEBUG] Données CSV formatées, is_venue_search: {is_venue_search}")
+
+
+@app.route('/submit_review', methods=['POST'])
+def submit_review():
+    data = request.get_json()
+    avis = data.get('avis', '').strip()
+    if not avis:
+        return jsonify({'error': 'Avis vide'}), 400
+    try:
+        with open('avis.csv', 'a', encoding='utf-8', newline='') as file:
+            writer = csv.writer(file)
+            # Vérifier si le fichier est vide pour ajouter le header
+            if file.tell() == 0:
+                writer.writerow(['avis'])
+            writer.writerow([avis])
+        return jsonify({'message': 'Avis soumis avec succès'}), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500   
     
     # Préparer les instructions système en fonction du type de recherche
     if is_venue_search:
