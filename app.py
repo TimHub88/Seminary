@@ -640,7 +640,6 @@ def call_deepseek_api(prompt):
     print(f"[DEBUG] Données CSV formatées, is_venue_search: {is_venue_search}")
 
 
-@app.route('/submit_review', methods=['POST'])
 def submit_review():
     data = request.get_json()
     avis = data.get('avis', '').strip()
