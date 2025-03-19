@@ -228,10 +228,7 @@ def parse_activites_vosges_csv():
         print(f"Erreur lors du parsing du fichier activités-vosges.csv: {e}")
         return {}
         
-# Charger les données CSV dans les variables globales
-salles_seminaires_data = parse_salles_seminaires_csv()
-activites_vosges_data = parse_activites_vosges_csv()
-
+@app.before_first_request def load_csv_data(): global salles_seminaires_data, activites_vosges_data salles_seminaires_data = parse_salles_seminaires_csv() activites_vosges_data = parse_activites_vosges_csv()
 
 def extract_city_from_prompt(prompt):
     """
